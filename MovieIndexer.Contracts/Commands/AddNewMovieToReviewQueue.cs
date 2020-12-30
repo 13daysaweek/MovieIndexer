@@ -5,5 +5,7 @@
         public string LocalFileName { get; set; }
         
         public byte[] ThumbnailImage { get; set; }
+        
+        public long FileSize { get; set; }
     }
 }
