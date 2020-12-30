@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "MoveIndexers.LocalFileProcessor": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

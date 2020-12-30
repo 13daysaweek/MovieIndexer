@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieIndexer.Contracts", "MovieIndexer.Contracts\MovieIndexer.Contracts.csproj", "{542DA898-91FD-474D-AFAD-4EBFE6FDA2DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoveIndexers.LocalFileProcessor", "MoveIndexers.LocalFileProcessor\MoveIndexers.LocalFileProcessor.csproj", "{704AFF89-8773-4DAB-86FF-47BEB29CD3B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{542DA898-91FD-474D-AFAD-4EBFE6FDA2DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542DA898-91FD-474D-AFAD-4EBFE6FDA2DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542DA898-91FD-474D-AFAD-4EBFE6FDA2DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542DA898-91FD-474D-AFAD-4EBFE6FDA2DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704AFF89-8773-4DAB-86FF-47BEB29CD3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704AFF89-8773-4DAB-86FF-47BEB29CD3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704AFF89-8773-4DAB-86FF-47BEB29CD3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704AFF89-8773-4DAB-86FF-47BEB29CD3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54339DCB-22D2-407F-92D1-9CEABC16C309}
+	EndGlobalSection
+EndGlobal
