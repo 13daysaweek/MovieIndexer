@@ -5,37 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MassTransit;
 
-namespace MoveIndexers.LocalFileProcessor
+namespace MovieIndexer.MovieFileDiscovery
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private IBus _bus;
-        private readonly IInitialLoadSearcher _initialLoadSearcher;
 
-        public Worker(ILogger<Worker> logger, IBus bus, IInitialLoadSearcher initialLoadSearcher)
+        public Worker(ILogger<Worker> logger)
         {
-            _bus = bus;
-            _initialLoadSearcher = initialLoadSearcher;
             _logger = logger;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _initialLoadSearcher.FindInitialMoviesAsync();
-            
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 await Task.Delay(1000, stoppingToken);
             }
         }
-    }
-
-    public class TestMessage
-    {
-        public string Message { get; set; }
     }
 }
