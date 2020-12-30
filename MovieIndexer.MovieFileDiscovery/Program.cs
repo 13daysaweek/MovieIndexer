@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MassTransit;
 
 namespace MovieIndexer.MovieFileDiscovery
 {
@@ -19,6 +20,16 @@ namespace MovieIndexer.MovieFileDiscovery
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+                    services.AddMassTransit(cfg =>
+                    {
+                        cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(_ =>
+                        {
+                            _.Host(hostContext.Configuration["rabbitMqHost"]);
+                        }));
+                        
+                        //cfg.AddRequestClient<>();
+                        //cfg.AddConsumer<>()
+                    });
                 });
     }
 }
