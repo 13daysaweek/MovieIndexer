@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
+using MovieIndexer.MovieFileDiscovery.Services;
 
 namespace MovieIndexer.MovieFileDiscovery
 {
@@ -11,11 +12,15 @@ namespace MovieIndexer.MovieFileDiscovery
     {
         private readonly ILogger<Worker> _logger;
         private readonly IBusControl _bus;
+        private readonly IInitialLoadOrchestrator _initialLoadOrchestrator;
 
-        public Worker(ILogger<Worker> logger, IBusControl bus)
+        public Worker(ILogger<Worker> logger, 
+            IBusControl bus,
+            IInitialLoadOrchestrator initialLoadOrchestrator)
         {
             _logger = logger;
             _bus = bus;
+            _initialLoadOrchestrator = initialLoadOrchestrator;
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -32,6 +37,8 @@ namespace MovieIndexer.MovieFileDiscovery
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await _initialLoadOrchestrator.PerformInitialDiscoveryAsync();
+            
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);

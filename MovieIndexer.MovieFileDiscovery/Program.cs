@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MassTransit;
+using MovieIndexer.Contracts.Commands;
+using MovieIndexer.MovieFileDiscovery.Services;
 
 namespace MovieIndexer.MovieFileDiscovery
 {
@@ -20,6 +18,9 @@ namespace MovieIndexer.MovieFileDiscovery
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+                    services.AddSingleton<IInitialLoadFileSearcher, InitialLoadFileSearcher>(_ => new InitialLoadFileSearcher(hostContext.Configuration["baseDirectory"]));
+                    services.AddSingleton<IInitialLoadOrchestrator, InitialLoadOrchestrator>();
+                    
                     services.AddMassTransit(cfg =>
                     {
                         cfg.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(_ =>
@@ -29,6 +30,7 @@ namespace MovieIndexer.MovieFileDiscovery
                         
                         //cfg.AddRequestClient<>();
                         //cfg.AddConsumer<>()
+                        //cfg.AddRequestClient<AddInitialMovieToReviewQueue>();
                     });
                 });
     }
