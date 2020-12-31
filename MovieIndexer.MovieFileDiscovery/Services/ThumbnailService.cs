@@ -24,6 +24,8 @@ namespace MovieIndexer.MovieFileDiscovery.Services
                 throw new ArgumentException(nameof(scratchDirectory));
             }
 
+            _mtnExeLocation = mtnExeLocation;
+            _scratchDirectory = scratchDirectory;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -37,7 +39,7 @@ namespace MovieIndexer.MovieFileDiscovery.Services
             var outputFileName = Path.Combine(_scratchDirectory,
                 $"{Path.GetFileNameWithoutExtension(inputMovie)}_s.jpg");
 
-            var arguments = $"-P -O \"{_scratchDirectory}\" \"{inputMovie}\"";
+            var arguments = $"-P -O {_scratchDirectory} {inputMovie}";
 
             try
             {
@@ -45,10 +47,12 @@ namespace MovieIndexer.MovieFileDiscovery.Services
                 var psi = new ProcessStartInfo
                 {
                     FileName = _mtnExeLocation,
-                    Arguments = "",
+                    Arguments = arguments,
                     CreateNoWindow = true,
                     ErrorDialog = false
                 };
+
+                process.StartInfo = psi;
 
                 process.Start();
                 process.WaitForExit();
@@ -66,7 +70,7 @@ namespace MovieIndexer.MovieFileDiscovery.Services
 
                 try
                 {
-                    File.Delete(outputFileName);
+                    //File.Delete(outputFileName);
                 }
                 catch (Exception e)
                 {
