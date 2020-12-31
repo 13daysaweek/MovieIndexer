@@ -19,8 +19,9 @@ namespace MovieIndexer.MovieFileDiscovery
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
-                    services.AddSingleton<IInitialLoadFileSearcher, InitialLoadFileSearcher>(_ => new InitialLoadFileSearcher(hostContext.Configuration["baseDirectory"]));
+                    services.AddSingleton<IInitialLoadFileSearcher, InitialLoadFileSearcher>(_ => new InitialLoadFileSearcher(hostContext.Configuration[Constants.ConfigurationKeys.BaseDirectory]));
                     services.AddSingleton<IInitialLoadOrchestrator, InitialLoadOrchestrator>();
+                    services.AddSingleton<IThumbnailService, ThumbnailService>(_ => new ThumbnailService(hostContext.Configuration[Constants.ConfigurationKeys.MtnExeLocation]));
                     
                     services.AddMassTransit(x =>
                     {
@@ -28,29 +29,13 @@ namespace MovieIndexer.MovieFileDiscovery
                         
                         x.UsingRabbitMq((context, cfg) =>
                         {
-                            cfg.Host(hostContext.Configuration["rabbitMqHost"]);
+                            cfg.Host(hostContext.Configuration[Constants.ConfigurationKeys.RabbitMqHost]);
                             
                             cfg.ReceiveEndpoint("initial-movie-thumbnail-request", e =>
                             {
                                 e.ConfigureConsumer<InitialMovieThumbnailRequestConsumer>(context);
                             });
                         });
-                        
-                        //x.AddBus(factory => Bus.Factory.CreateUsingRabbitMq(_ =>
-                        //{
-                        //    _.Host(hostContext.Configuration["rabbitMqHost"]);
-                            
-                        //    //_.ReceiveEndpoint("initial-movie-thumbnail-requests", ep =>
-                        //    //{
-                        //    //    ep.Consumer<InitialMovieThumbnailRequestConsumer>();
-                        //    //});
-                        //}));
-
-                        //x.AddConsumer<InitialMovieThumbnailRequestConsumer>();
-
-                        //cfg.AddRequestClient<>();
-                        //cfg.AddConsumer<>()
-                        //cfg.AddRequestClient<AddInitialMovieToThumbnailQueue>();
                     });
                 });
     }
