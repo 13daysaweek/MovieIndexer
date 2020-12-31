@@ -27,7 +27,7 @@ namespace MovieIndexer.MovieFileDiscovery.Services
             _logger.LogInformation($"Getting initial files");
             var initialFileList = _initialLoadFileSearcher.FindInitialMovies();
 
-            var messages = initialFileList.Select(path => new AddInitialMovieToReviewQueue {MovieFilePath = path});
+            var messages = initialFileList.Select(path => new AddInitialMovieToThumbnailQueue {MovieFilePath = path});
             
             foreach (var message in messages)
             {
